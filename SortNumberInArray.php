@@ -5,8 +5,9 @@ class SortNumberInArrays {
     function sortNumber($stingInput) {
         $arrayInput = explode(',', $stingInput);
         $tmp = null;
-        for ($i = 0; $i < count($arrayInput); $i++) {
-            for ($j = 0; $j < count($arrayInput) - 1; $j++) {
+        $countArrayInput = count($arrayInput);
+        for ($i = 0; $i < $countArrayInput; $i++) {
+            for ($j = 0; $j < $countArrayInput - 1; $j++) {
                 if ($arrayInput[$j + 1] < $arrayInput[$j]) {
                     $tmp = $arrayInput[$j];
                     $arrayInput[$j] = $arrayInput[$j + 1];
@@ -56,6 +57,14 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
             2, 4, 5, 8 
         );
         $result = $this->sortNumber->sortNumber('2,8,4,5');
+        $this->assertEquals($expected, $result);
+    }
+
+    function testNumber3775ShouldReturnArray357() {
+        $expected = array(
+            3, 5, 7
+        );
+        $result = $this->sortNumber->sortNumber('3,7,7,5');
         $this->assertEquals($expected, $result);
     }
 
