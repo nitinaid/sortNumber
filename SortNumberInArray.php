@@ -15,7 +15,25 @@ class SortNumberInArrays {
                 }
             }
         }
-        return $arrayInput;
+        $unique = $this->arrayUnique($arrayInput);
+        return $unique;
+    }
+
+    function arrayUnique($input = ''){
+    	$unique = array();
+    	$unique[] = $input[0];
+    	$temp = $input[0];
+    	unset($input[0]);
+    	foreach ($input as $keyOfInputData => $valueOfInputData) {
+    		if(!is_numeric($valueOfInputData)){
+        		continue;
+        	}
+    		if($temp != $valueOfInputData){
+    			$unique[] = $valueOfInputData;
+    		}
+    		$temp = $valueOfInputData;
+    	}
+    	return $unique;
     }
 
 }
@@ -66,6 +84,12 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
         );
         $result = $this->sortNumber->sortNumber('3,7,7,5');
         $this->assertEquals($expected, $result);
+    }
+
+    function testNumberDuplicate9921() {
+    	$expected = array(1, 2, 9);
+    	$result = $this->sortNumber->sortNumber('9,"",2,1');
+    	$this->assertEquals($expected, $result);
     }
 
 }
