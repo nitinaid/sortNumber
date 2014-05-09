@@ -4,36 +4,28 @@ class SortNumberInArrays {
 
     function sortNumber($stingInput) {
         $arrayInput = explode(',', $stingInput);
+        $arrayInput = explode(',', $stingInput);
+        $arrayUnique = null;
+        foreach ($arrayInput as $val) {
+            if (intval($val)!=0) {
+                $arrayUnique[$val] = $val;
+            }
+        }
+        $arrayUniqueIndex = null;
+        foreach ($arrayUnique as $key => $val) {
+            $arrayUniqueIndex[] = $key;
+        }
         $tmp = null;
-        $countArrayInput = count($arrayInput);
-        for ($i = 0; $i < $countArrayInput; $i++) {
-            for ($j = 0; $j < $countArrayInput - 1; $j++) {
-                if ($arrayInput[$j + 1] < $arrayInput[$j]) {
-                    $tmp = $arrayInput[$j];
-                    $arrayInput[$j] = $arrayInput[$j + 1];
-                    $arrayInput[$j + 1] = $tmp;
+        for ($i = 0; $i < count($arrayUniqueIndex); $i++) {
+            for ($j = 0; $j < count($arrayUniqueIndex) - 1; $j++) {
+                if ($arrayUniqueIndex[$j + 1] < $arrayUniqueIndex[$j]) {
+                    $tmp = $arrayUniqueIndex[$j];
+                    $arrayUniqueIndex[$j] = $arrayUniqueIndex[$j + 1];
+                    $arrayUniqueIndex[$j + 1] = $tmp;
                 }
             }
         }
-        $unique = $this->arrayUnique($arrayInput);
-        return $unique;
-    }
-
-    function arrayUnique($input = ''){
-    	$unique = array();
-    	$unique[] = $input[0];
-    	$temp = $input[0];
-    	unset($input[0]);
-    	foreach ($input as $keyOfInputData => $valueOfInputData) {
-    		if(!is_numeric($valueOfInputData)){
-        		continue;
-        	}
-    		if($temp != $valueOfInputData){
-    			$unique[] = $valueOfInputData;
-    		}
-    		$temp = $valueOfInputData;
-    	}
-    	return $unique;
+        return $arrayUniqueIndex;
     }
 
 }
@@ -48,7 +40,7 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
 
     function testNumber1ShouldReturnArray1() {
         $expected = array(
-            1 
+            1
         );
         $result = $this->sortNumber->sortNumber('1');
         $this->assertEquals($expected, $result);
@@ -56,7 +48,7 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
 
     function testNumber71ShouldReturnArray17() {
         $expected = array(
-            1, 7 
+            1, 7
         );
         $result = $this->sortNumber->sortNumber('7,1');
         $this->assertEquals($expected, $result);
@@ -64,7 +56,7 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
 
     function testNumber357ShouldReturnArray357() {
         $expected = array(
-            3, 5, 7 
+            3, 5, 7
         );
         $result = $this->sortNumber->sortNumber('3,5,7');
         $this->assertEquals($expected, $result);
@@ -72,7 +64,7 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
 
     function testNumber2845ShouldReturnArray2458() {
         $expected = array(
-            2, 4, 5, 8 
+            2, 4, 5, 8
         );
         $result = $this->sortNumber->sortNumber('2,8,4,5');
         $this->assertEquals($expected, $result);
@@ -87,9 +79,11 @@ class TestSortNumberInArray extends PHPUnit_Framework_TestCase {
     }
 
     function testNumberDuplicate9921() {
-    	$expected = array(1, 2, 9);
-    	$result = $this->sortNumber->sortNumber('9,"",2,1');
-    	$this->assertEquals($expected, $result);
+        $expected = array(
+            1, 2, 9
+        );
+        $result = $this->sortNumber->sortNumber('9,"x",2,1');
+        $this->assertEquals($expected, $result);
     }
 
 }
